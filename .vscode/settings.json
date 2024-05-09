@@ -8,7 +8,9 @@
   "editor.formatOnSaveMode": "file", // required to format on save
   "vs-code-prettier-eslint.prettierLast": false,
   "files.associations": {
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "regex": "cpp",
+    "ostream": "cpp"
   },
   "[cpp]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

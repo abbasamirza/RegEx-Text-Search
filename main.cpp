@@ -1,74 +1,63 @@
 #include "colors.h"
 #include "messages.h"
+#include "helpers.h"
 #include <iostream>
 #include <regex>
 #include <string>
+#include <unistd.h>
 using namespace std;
 
-// Function to get input text and regular expression with validation
-void getInput(string& text, string& regEx) {
-    while (true) {
-        cout << "Enter your text to search from:\n";
-        getline(cin, text);
-
-        // Validate the text input
-        if (text.empty()) {
-            cout << "Error: Text cannot be empty. Please enter some text." << endl;
-        } else {
-            break; // Exit the loop if text is valid
-        }
-    }
-
-    bool validRegex = false;
-    while (!validRegex) {
-        cout << "Enter your regular expression pattern:\n";
-        getline(cin, regEx);
-
-        // Validate the regular expression
-        try {
-            regex regexObject(regEx);
-            validRegex = true;
-        } catch (regex_error& e) {
-            char choice;
-            cout << "Invalid regular expression: " << e.what() << endl;
-            cout << "1. Re-enter the text.\n";
-            cout << "2. Re-enter the regular expression.\n";
-            cout << "3. Exit the program.\n";
-            cout << "Enter your choice: ";
-            cin >> choice;
-            cin.ignore(); // Clear the input buffer
-            switch (choice) {
-                case '1':
-                    // User wants to re-enter the text
-                    getInput(text, regEx);
-                    return;
-                case '2':
-                    // User wants to re-enter the regular expression
-                    break;
-                case '3':
-                    // Exit the program
-                    exit(1);
-                default:
-                    cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
-            }
-        }
-    }
-}
+#define EXIT 4
 
 int main() 
 {
     string text, regEx;
-    displayExampleText();
+    int matchCount = 0;
 
-    getInput(text, regEx);
+    displayExampleText();
+    getInputText(text);
+    cout << endl;
+    getRegex(text, regEx);
 
     // Apply the regular expression to the text
     regex regexObject(regEx);
-    if (regex_search(text, regexObject)) {
-        cout << "Regular expression matched in the text." << endl;
-    } else {
-        cout << "Regular expression did not match in the text." << endl;
-    }
+    
+    system("clear");
+    displayExampleText();
+    applyRegularExpression(text, regexObject, &matchCount);
+
+    int choice;
+    
+    do {
+        matchCount = 0;
+        cout << endl << endl;
+        displayMenu();
+        getInputChoice(&choice);
+
+        if (choice == 1) {
+            displayExampleText();
+            cout << "\t\t\tOld Text: " << text << endl;
+            getInputText(text);
+            cout << "\t\t\t";
+            displayTypingEffect("Text was updated successfully!", BlackFG, GreenFG);
+            sleep(1);
+            displayExampleText();
+        } else if (choice == 2) {
+            displayExampleText();
+            cout << "\t\t\tOld Regular Expression: " << regEx << endl;
+            getRegex(text, regEx);
+            regexObject = regex(regEx);
+            cout << "\t\t\t";
+            displayTypingEffect("RegEx was updated successfully!", BlackFG, GreenFG);
+            sleep(1);
+            displayExampleText();
+        } else if (choice == 3) {
+            displayExampleText();
+            applyRegularExpression(text, regexObject, &matchCount);
+        }
+    } while (choice != EXIT);
+
+    system("clear");
 
     return 0;
 }

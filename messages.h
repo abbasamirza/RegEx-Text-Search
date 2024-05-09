@@ -2,5 +2,6 @@
 #define MESSAGES_H
 
 void displayExampleText();
+void displayMenu();
 
 #endif
