@@ -20,9 +20,13 @@ const char* WhiteBG = "47";
 
 // Display text in color functions
 void displayTextInColor(string text) {
-    printf("\x1B[%s;%sm%s\033[0m\n", BlackFG, WhiteFG, text.c_str());
+    printf("\x1B[%s;%sm%s\033[0m", BlackFG, WhiteFG, text.c_str());
 }
 
 void displayTextInColor(string text, const char* BGColor, const char* FGColor) {
-    printf("\x1B[%s;%sm%s\033[0m\n", BGColor, FGColor, text.c_str());
+    printf("\x1B[%s;%sm%s\033[0m", BGColor, FGColor, text.c_str());
+}
+
+void displayTextInColor(char ch, const char* BGColor, const char* FGColor) {
+    printf("\x1B[%s;%sm%c\033[0m", BGColor, FGColor, ch);
 }

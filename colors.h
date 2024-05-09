@@ -23,5 +23,6 @@ extern const char* WhiteBG;
 // Display text in color functions
 void displayTextInColor(string);
 void displayTextInColor(string, const char*, const char*);
+void displayTextInColor(char, const char*, const char*);
 
 #endif
