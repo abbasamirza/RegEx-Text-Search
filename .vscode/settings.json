@@ -8,6 +8,7 @@
   "editor.formatOnSaveMode": "file", // required to format on save
   "vs-code-prettier-eslint.prettierLast": false,
   "files.associations": {
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "string": "cpp"
   } // set as "true" to run 'prettier' last not first
 }

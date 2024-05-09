@@ -1,2 +1,2 @@
-main: main.cpp messages.cpp
-	g++ -o main main.cpp messages.cpp
+main: main.cpp messages.cpp colors.cpp
+	g++ -o main main.cpp messages.cpp colors.cpp

@@ -1,21 +1,27 @@
 #ifndef COLORS_H
 #define COLORS_H
 
-#define BLUE 1
-#define GREEN 2
-#define AQUA 3
-#define RED 4
-#define PURPLE 5
-#define YELLOW 6
-#define WHITE 7
-#define GRAY 8
-#define LIGHT_BLUE 9
-#define BLACK 0
-#define LIGHT_GREEN A
-#define LIGHT_AQUA B
-#define LIGHT_RED C
-#define LIGHT_PURPLE D
-#define LIGHT_YELLOW E
-#define BRIGHT_WHITE F
+#include <iostream>
+using namespace std;
+
+// Foreground colors
+extern const char* BlackFG;
+extern const char* RedFG;
+extern const char* GreenFG;
+extern const char* BlueFG;
+extern const char* MagentaFG;
+extern const char* WhiteFG;
+
+// Background colors
+extern const char* BlackBG;
+extern const char* RedBG;
+extern const char* GreenBG;
+extern const char* BlueBG;
+extern const char* MagentaBG;
+extern const char* WhiteBG;
+
+// Display text in color functions
+void displayTextInColor(string);
+void displayTextInColor(string, const char*, const char*);
 
 #endif
