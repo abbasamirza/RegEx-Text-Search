@@ -9,6 +9,6 @@ void getInputText(string&);
 void getRegex(string&, string&);
 void getInputChoice(int*);
 void displayTypingEffect(string, const char*, const char*);
-void applyRegularExpression(string&, regex, int*);
+void applyRegularExpression(string&, regex, int*, string&);
 
 #endif

@@ -76,8 +76,8 @@ void getInputChoice(int* choice) {
     fflush(stdin);
     cin >> *choice;
 
-    while (*choice < 1 || *choice > 4) {
-        displayTextInColor("\n\t\t\tInvalid choice. Please enter 1, 2, 3, or 4.\n", BlackFG, RedFG);
+    while (*choice < 1 || *choice > 3) {
+        displayTextInColor("\n\t\t\tInvalid choice. Please enter 1, 2, or 3.\n", BlackFG, RedFG);
         cout << "\t\t\tEnter the number of your choice: ";
         fflush(stdin);
         cin >> *choice;
@@ -92,7 +92,7 @@ void displayTypingEffect(string str, const char* BGColor, const char* FGColor) {
     }
 }
 
-void applyRegularExpression(string& text, regex regexObject, int* matchCount) {
+void applyRegularExpression(string& text, regex regexObject, int* matchCount, string& regEx) {
     sregex_iterator wordsBegin = sregex_iterator(text.begin(), text.end(), regexObject);
     sregex_iterator wordsEnd = sregex_iterator();
     size_t pos = 0;
@@ -108,7 +108,7 @@ void applyRegularExpression(string& text, regex regexObject, int* matchCount) {
 
         // Highlight the matched characters
         string matchedText = match.str();
-        *matchCount += matchedText.length();
+        (*matchCount)++;
         displayTextInColor(matchedText, BlueBG, WhiteFG);
 
         // Update the position
@@ -116,7 +116,9 @@ void applyRegularExpression(string& text, regex regexObject, int* matchCount) {
     }
 
     // Display the remaining characters
-    cout << text.substr(pos) << "\n\n\t\t\t" << *matchCount;
+    cout << text.substr(pos);
+    displayTextInColor("\n\n\t\t\tExpression: ", BlackFG, BlueFG);
+    cout << regEx << "\n\n\t\t\t" << *matchCount;
 
     if (*matchCount != 0) {
         displayTextInColor(" Matches\n", BlackFG, GreenFG);

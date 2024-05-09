@@ -7,7 +7,7 @@
 #include <unistd.h>
 using namespace std;
 
-#define EXIT 4
+#define EXIT 3
 
 int main() 
 {
@@ -24,7 +24,7 @@ int main()
     
     system("clear");
     displayExampleText();
-    applyRegularExpression(text, regexObject, &matchCount);
+    applyRegularExpression(text, regexObject, &matchCount, regEx);
 
     int choice;
     
@@ -42,6 +42,7 @@ int main()
             displayTypingEffect("Text was updated successfully!", BlackFG, GreenFG);
             sleep(1);
             displayExampleText();
+            applyRegularExpression(text, regexObject, &matchCount, regEx);
         } else if (choice == 2) {
             displayExampleText();
             cout << "\t\t\tOld Regular Expression: " << regEx << endl;
@@ -51,9 +52,7 @@ int main()
             displayTypingEffect("RegEx was updated successfully!", BlackFG, GreenFG);
             sleep(1);
             displayExampleText();
-        } else if (choice == 3) {
-            displayExampleText();
-            applyRegularExpression(text, regexObject, &matchCount);
+            applyRegularExpression(text, regexObject, &matchCount, regEx);
         }
     } while (choice != EXIT);
 
