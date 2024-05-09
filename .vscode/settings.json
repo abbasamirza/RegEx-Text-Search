@@ -9,5 +9,8 @@
   "vs-code-prettier-eslint.prettierLast": false,
   "files.associations": {
     "iostream": "cpp"
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   } // set as "true" to run 'prettier' last not first
 }

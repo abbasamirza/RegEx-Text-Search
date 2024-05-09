@@ -2,61 +2,73 @@
 #include "messages.h"
 #include <iostream>
 #include <regex>
+#include <string>
 using namespace std;
 
-int main() {
-    printf("\n");
-    printf("\x1B[31mTexting\033[0m\t\t");
-    printf("\x1B[32mTexting\033[0m\t\t");
-    printf("\x1B[33mTexting\033[0m\t\t");
-    printf("\x1B[34mTexting\033[0m\t\t");
-    printf("\x1B[35mTexting\033[0m\n");
-    
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[37mTexting\033[0m\t\t");
-    printf("\x1B[93mTexting\033[0m\n");
-    
-    printf("\033[3;42;30mTexting\033[0m\t\t");
-    printf("\033[3;43;30mTexting\033[0m\t\t");
-    printf("\033[3;44;30mTexting\033[0m\t\t");
-    printf("\033[3;104;30mTexting\033[0m\t\t");
-    printf("\033[3;100;30mTexting\033[0m\n");
+// Function to get input text and regular expression with validation
+void getInput(string& text, string& regEx) {
+    while (true) {
+        cout << "Enter your text to search from:\n";
+        getline(cin, text);
 
-    printf("\033[3;47;35mTexting\033[0m\t\t");
-    printf("\033[2;47;35mTexting\033[0m\t\t");
-    printf("\033[1;47;35mTexting\033[0m\t\t");
-    printf("\t\t");
-    printf("\n");
-
-    string subject;
-    cout << "Enter the string: ";
-    getline(cin, subject);
-
-    string regexPattern;
-    cout << "Enter the regex pattern: ";
-    getline(cin, regexPattern);
-
-    // regex object.
-    regex re(regexPattern);
-
-    // finding all the matches.
-    for (sregex_iterator it = sregex_iterator(subject.begin(), subject.end(), re);
-        it != sregex_iterator(); it++) {
-        smatch match = *it;
-        cout << "\nMatched string is = " << match.str(0)
-            << "\nand it is found at position "
-            << match.position(0) << endl;
-        // Check if there's a capture group in the pattern
-        if (match.size() > 1) {
-            cout << "Capture " << match.str(1)
-                << " at position " << match.position(1) << endl;
+        // Validate the text input
+        if (text.empty()) {
+            cout << "Error: Text cannot be empty. Please enter some text." << endl;
+        } else {
+            break; // Exit the loop if text is valid
         }
     }
 
+    bool validRegex = false;
+    while (!validRegex) {
+        cout << "Enter your regular expression pattern:\n";
+        getline(cin, regEx);
+
+        // Validate the regular expression
+        try {
+            regex regexObject(regEx);
+            validRegex = true;
+        } catch (regex_error& e) {
+            char choice;
+            cout << "Invalid regular expression: " << e.what() << endl;
+            cout << "1. Re-enter the text.\n";
+            cout << "2. Re-enter the regular expression.\n";
+            cout << "3. Exit the program.\n";
+            cout << "Enter your choice: ";
+            cin >> choice;
+            cin.ignore(); // Clear the input buffer
+            switch (choice) {
+                case '1':
+                    // User wants to re-enter the text
+                    getInput(text, regEx);
+                    return;
+                case '2':
+                    // User wants to re-enter the regular expression
+                    break;
+                case '3':
+                    // Exit the program
+                    exit(1);
+                default:
+                    cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
+            }
+        }
+    }
+}
+
+int main() 
+{
+    string text, regEx;
     displayExampleText();
 
+    getInput(text, regEx);
 
-	return 0;
+    // Apply the regular expression to the text
+    regex regexObject(regEx);
+    if (regex_search(text, regexObject)) {
+        cout << "Regular expression matched in the text." << endl;
+    } else {
+        cout << "Regular expression did not match in the text." << endl;
+    }
+
+    return 0;
 }
